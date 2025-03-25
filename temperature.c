@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "temperature.h"  // Don't forget to include this in actual build
+#include "temperature.h"  
 
 float celsius_to_fahrenheit(float celsius) {
     return (9.0 / 5.0) * celsius + 32;
