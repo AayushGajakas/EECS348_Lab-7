@@ -3,45 +3,45 @@
 
 int main() {
     float input_temp;
-    char from_scale, to_scale;
+    int from_scale, to_scale;
 
-    printf("Enter the temperature followed by its scale (C, F, or K): ");
-    scanf("%f %c", &input_temp, &from_scale);
+    printf("Enter the temperature: ");
+    scanf("%f", &input_temp);
 
-    printf("Convert to which scale? (C, F, or K): ");
-    scanf(" %c", &to_scale);  // Note: space before %c to skip whitespace
+    printf("Choose the current scale (1) Celsius, (2) Fahrenheit, (3) Kelvin: ");
+    scanf("%d", &from_scale);
+
+    printf("Convert to (1) Celsius, (2) Fahrenheit, (3) Kelvin: ");
+    scanf("%d", &to_scale);
 
     float temp_celsius;
     float converted_temp;
+    char unit = ' ';
 
-    // Step 1: Normalize input to Celsius
-    if (from_scale == 'F' || from_scale == 'f') {
-        temp_celsius = fahrenheit_to_celsius(input_temp);
-    } else if (from_scale == 'K' || from_scale == 'k') {
-        temp_celsius = kelvin_to_celsius(input_temp);
-    } else if (from_scale == 'C' || from_scale == 'c') {
-        temp_celsius = input_temp;
-    } else {
-        printf("Invalid input scale.\n");
-        return 1;
+    // Step 1: Convert input to Celsius
+    switch (from_scale) {
+        case 1: temp_celsius = input_temp; break;
+        case 2: temp_celsius = fahrenheit_to_celsius(input_temp); break;
+        case 3: temp_celsius = kelvin_to_celsius(input_temp); break;
+        default:
+            printf("Invalid input scale.\n");
+            return 1;
     }
 
-    // Step 2: Convert to target scale
-    if (to_scale == 'F' || to_scale == 'f') {
-        converted_temp = celsius_to_fahrenheit(temp_celsius);
-    } else if (to_scale == 'K' || to_scale == 'k') {
-        converted_temp = celsius_to_kelvin(temp_celsius);
-    } else if (to_scale == 'C' || to_scale == 'c') {
-        converted_temp = temp_celsius;
-    } else {
-        printf("Invalid target scale.\n");
-        return 1;
+    // Step 2: Convert Celsius to target scale
+    switch (to_scale) {
+        case 1: converted_temp = temp_celsius; unit = 'C'; break;
+        case 2: converted_temp = celsius_to_fahrenheit(temp_celsius); unit = 'F'; break;
+        case 3: converted_temp = celsius_to_kelvin(temp_celsius); unit = 'K'; break;
+        default:
+            printf("Invalid target scale.\n");
+            return 1;
     }
 
-    // Step 3: Display result
-    printf("\nConverted Temperature: %.2f %c\n", converted_temp, to_scale);
+    // Step 3: Print output
+    printf("\nConverted temperature: %.2f°%c\n", converted_temp, unit);
 
-    // Step 4: Categorize temperature in Celsius
+    // Step 4: Categorize temperature
     categorize_temperature(temp_celsius);
 
     return 0;
